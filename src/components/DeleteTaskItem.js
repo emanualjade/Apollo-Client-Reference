@@ -16,7 +16,7 @@ const DeleteTaskItem = ({ id, name, completed }) => {
           className="button"
           onClick={() => {
             deleteTask({
-              variables: { id },
+              variables: { id }
             });
           }}
         >
@@ -27,7 +27,7 @@ const DeleteTaskItem = ({ id, name, completed }) => {
             deleteTask({
               variables: { id },
               refetchQueries: ["Tasks", "User"],
-              awaitRefetchQueries: true,
+              awaitRefetchQueries: true
             });
           }}
         >
@@ -43,7 +43,7 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                 }
                 // UPDATE GET_USER_QUERY
                 const userDataFromCache = cache.readQuery({
-                  query: GET_USER_QUERY,
+                  query: GET_USER_QUERY
                 });
                 if (userDataFromCache.user.__typename === "User") {
                   const newUserData = {
@@ -52,13 +52,13 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                       tasks: [
                         ...userDataFromCache.user.tasks.filter(
                           (task) => task.id !== id
-                        ),
-                      ],
-                    },
+                        )
+                      ]
+                    }
                   };
                   cache.writeQuery({
                     query: GET_USER_QUERY,
-                    data: newUserData,
+                    data: newUserData
                   });
                 }
 
@@ -72,15 +72,15 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                     tasks: {
                       ...data.tasks,
                       pageInfo: { ...data.tasks.pageInfo },
-                      taskFeed: [...taskFeed.filter((task) => task.id !== id)],
-                    },
+                      taskFeed: [...taskFeed.filter((task) => task.id !== id)]
+                    }
                   };
                   cache.writeQuery({
                     query: TASKS_QUERY,
-                    data: newTasksData,
+                    data: newTasksData
                   });
                 }
-              },
+              }
             });
           }}
         >
@@ -96,7 +96,7 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                 }
                 // UPDATE GET_USER_QUERY
                 const userDataFromCache = cache.readQuery({
-                  query: GET_USER_QUERY,
+                  query: GET_USER_QUERY
                 });
                 if (userDataFromCache.user.__typename === "User") {
                   const newUserData = {
@@ -105,13 +105,13 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                       tasks: [
                         ...userDataFromCache.user.tasks.filter(
                           (task) => task.id !== id
-                        ),
-                      ],
-                    },
+                        )
+                      ]
+                    }
                   };
                   cache.writeQuery({
                     query: GET_USER_QUERY,
-                    data: newUserData,
+                    data: newUserData
                   });
                 }
 
@@ -125,12 +125,12 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                     tasks: {
                       ...data.tasks,
                       pageInfo: { ...data.tasks.pageInfo },
-                      taskFeed: [...taskFeed.filter((task) => task.id !== id)],
-                    },
+                      taskFeed: [...taskFeed.filter((task) => task.id !== id)]
+                    }
                   };
                   cache.writeQuery({
                     query: TASKS_QUERY,
-                    data: newTasksData,
+                    data: newTasksData
                   });
                 }
               },
@@ -140,9 +140,9 @@ const DeleteTaskItem = ({ id, name, completed }) => {
                   __typename: "Task",
                   completed,
                   id,
-                  name,
-                },
-              },
+                  name
+                }
+              }
             });
           }}
         >

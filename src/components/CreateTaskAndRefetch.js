@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_TASK_MUTATION } from "../graphql";
@@ -19,10 +20,10 @@ const CreateTaskAndRefetch = () => {
         await createTask({
           variables: {
             name: taskName,
-            completed: false,
+            completed: false
           },
           refetchQueries: ["User", "Tasks"],
-          awaitRefetchQueries: true,
+          awaitRefetchQueries: true
         });
         setTaskName("");
       }}
@@ -33,7 +34,7 @@ const CreateTaskAndRefetch = () => {
           borderRadius: "8px",
           padding: "15px",
           marginTop: "15px",
-          background: "#f4f4f4",
+          background: "#f4f4f4"
         }}
       >
         <input

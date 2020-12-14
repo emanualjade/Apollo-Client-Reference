@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_TASK_MUTATION } from "../graphql";
@@ -19,8 +20,8 @@ const CreateTask = () => {
         await createTask({
           variables: {
             name: taskName,
-            completed: false,
-          },
+            completed: false
+          }
         });
         setTaskName("");
       }}
@@ -31,7 +32,7 @@ const CreateTask = () => {
           borderRadius: "8px",
           padding: "15px",
           marginTop: "15px",
-          background: "#f4f4f4",
+          background: "#f4f4f4"
         }}
       >
         <input
@@ -42,9 +43,7 @@ const CreateTask = () => {
             setTaskName(event.target.value);
           }}
         />{" "}
-        <button>
-          {createTaskPending ? "In progress..." : "Create task"}
-        </button>
+        <button>{createTaskPending ? "In progress..." : "Create task"}</button>
       </div>
     </form>
   );

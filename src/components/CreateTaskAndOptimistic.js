@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { TASKS_QUERY, CREATE_TASK_MUTATION, GET_USER_QUERY } from "../graphql";
@@ -6,9 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const CreateTaskAndOptimistic = () => {
   const [taskName, setTaskName] = useState("");
 
-  const [createTask] = useMutation(
-    CREATE_TASK_MUTATION
-  );
+  const [createTask] = useMutation(CREATE_TASK_MUTATION);
 
   return (
     <form
@@ -20,7 +19,7 @@ const CreateTaskAndOptimistic = () => {
         await createTask({
           variables: {
             name: taskName,
-            completed: false,
+            completed: false
           },
           optimisticResponse: {
             __typename: "Mutation",
@@ -28,8 +27,8 @@ const CreateTaskAndOptimistic = () => {
               __typename: "Task",
               completed: false,
               id: uuidv4(),
-              name: taskName,
-            },
+              name: taskName
+            }
           },
           update(cache, result) {
             setTaskName("");
@@ -38,7 +37,7 @@ const CreateTaskAndOptimistic = () => {
             }
             // UPDATE GET_USER_QUERY
             const userDataFromCache = cache.readQuery({
-              query: GET_USER_QUERY,
+              query: GET_USER_QUERY
             });
             if (userDataFromCache.user.__typename === "User") {
               const newUserData = {
@@ -46,13 +45,13 @@ const CreateTaskAndOptimistic = () => {
                   ...userDataFromCache.user,
                   tasks: [
                     result.data.createTask,
-                    ...userDataFromCache.user.tasks,
-                  ],
-                },
+                    ...userDataFromCache.user.tasks
+                  ]
+                }
               };
               cache.writeQuery({
                 query: GET_USER_QUERY,
-                data: newUserData,
+                data: newUserData
               });
             }
 
@@ -66,15 +65,15 @@ const CreateTaskAndOptimistic = () => {
                 tasks: {
                   ...data.tasks,
                   pageInfo: { ...data.tasks.pageInfo },
-                  taskFeed: [result.data.createTask, ...taskFeed],
-                },
+                  taskFeed: [result.data.createTask, ...taskFeed]
+                }
               };
               cache.writeQuery({
                 query: TASKS_QUERY,
-                data: newTasksData,
+                data: newTasksData
               });
             }
-          },
+          }
         });
       }}
     >
@@ -84,7 +83,7 @@ const CreateTaskAndOptimistic = () => {
           borderRadius: "8px",
           padding: "15px",
           marginTop: "15px",
-          background: "#f4f4f4",
+          background: "#f4f4f4"
         }}
       >
         <input
@@ -95,9 +94,7 @@ const CreateTaskAndOptimistic = () => {
             setTaskName(event.target.value);
           }}
         />{" "}
-        <button>
-          Create task + optimistic update
-        </button>
+        <button>Create task + optimistic update</button>
       </div>
     </form>
   );

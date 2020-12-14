@@ -1,9 +1,10 @@
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_USER_QUERY } from "../graphql";
 
 const UserTaskList = () => {
   const { data } = useQuery(GET_USER_QUERY, {
-    errorPolicy: "ignore",
+    errorPolicy: "ignore"
   });
   return (
     <>
@@ -14,7 +15,7 @@ const UserTaskList = () => {
           borderRadius: "8px",
           padding: "15px",
           marginTop: "15px",
-          background: "#f4f4f4",
+          background: "#f4f4f4"
         }}
       >
         {data.user.tasks.map((task) => (

@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { TASKS_QUERY, CREATE_TASK_MUTATION, GET_USER_QUERY } from "../graphql";
@@ -18,7 +19,7 @@ const CreateTaskAndUpdate = () => {
         await createTask({
           variables: {
             name: taskName,
-            completed: false,
+            completed: false
           },
           optimisticResponse: {
             __typename: "Mutation",
@@ -26,8 +27,8 @@ const CreateTaskAndUpdate = () => {
               __typename: "Task",
               completed: false,
               id: uuidv4(),
-              name: `Incorrect XX ${taskName} XX`,
-            },
+              name: `Incorrect XX ${taskName} XX`
+            }
           },
           update(cache, result) {
             setTaskName("");
@@ -36,7 +37,7 @@ const CreateTaskAndUpdate = () => {
             }
             // UPDATE GET_USER_QUERY
             const userDataFromCache = cache.readQuery({
-              query: GET_USER_QUERY,
+              query: GET_USER_QUERY
             });
             if (userDataFromCache.user.__typename === "User") {
               const newUserData = {
@@ -44,13 +45,13 @@ const CreateTaskAndUpdate = () => {
                   ...userDataFromCache.user,
                   tasks: [
                     result.data.createTask,
-                    ...userDataFromCache.user.tasks,
-                  ],
-                },
+                    ...userDataFromCache.user.tasks
+                  ]
+                }
               };
               cache.writeQuery({
                 query: GET_USER_QUERY,
-                data: newUserData,
+                data: newUserData
               });
             }
 
@@ -64,15 +65,15 @@ const CreateTaskAndUpdate = () => {
                 tasks: {
                   ...data.tasks,
                   pageInfo: { ...data.tasks.pageInfo },
-                  taskFeed: [result.data.createTask, ...taskFeed],
-                },
+                  taskFeed: [result.data.createTask, ...taskFeed]
+                }
               };
               cache.writeQuery({
                 query: TASKS_QUERY,
-                data: newTasksData,
+                data: newTasksData
               });
             }
-          },
+          }
         });
       }}
     >
@@ -82,7 +83,7 @@ const CreateTaskAndUpdate = () => {
           borderRadius: "8px",
           padding: "15px",
           marginTop: "15px",
-          background: "#f4f4f4",
+          background: "#f4f4f4"
         }}
       >
         <input

@@ -1,3 +1,4 @@
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import "./App.css";
 import LoginForm from "./components/LoginForm";
@@ -14,7 +15,7 @@ import { GET_USER_QUERY } from "./graphql";
 
 function App() {
   const { data, loading, refetch } = useQuery(GET_USER_QUERY, {
-    errorPolicy: "ignore",
+    errorPolicy: "ignore"
   });
   const isLoggedIn = data && data.user && data.user.__typename === "User";
 
@@ -39,7 +40,7 @@ function App() {
               borderRadius: "8px",
               padding: "15px",
               marginTop: "15px",
-              background: "#f4f4f4",
+              background: "#f4f4f4"
             }}
           >
             <p>
@@ -79,7 +80,7 @@ function App() {
               padding: "15px",
               position: "fixed",
               left: "15px",
-              top: "15px",
+              top: "15px"
             }}
           >
             <UserTaskList />
